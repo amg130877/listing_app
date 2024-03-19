@@ -25,7 +25,7 @@ export default function Listings() {
   const [agent, setAgent] = React.useState(null)
   const [iconScale, seticonScale] = React.useState()
 
-  const API_KEY = 'AIzaSyBjugX0FHm6vxfIAZCZuWm9AVSJpJpUWEk'
+  const API_KEY = process.env.REACT_APP_MAP_KEY
   let locations = [...allAgents]
 
   React.useEffect(() => {
