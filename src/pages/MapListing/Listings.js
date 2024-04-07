@@ -45,6 +45,11 @@ export default function Listings() {
     locations = locations.filter(loc => loc.name === agent.name)
   }
 
+
+  const markerClickHandler = (location) => {
+    console.log(location);
+  }
+
   /* eslint-disable react/jsx-boolean-value */
   return (
     <Grid container spacing={0} sx={{ mb: 4 }}>
@@ -115,10 +120,7 @@ export default function Listings() {
               {locations.map((loc) => (
                 <Marker
                   key={loc.name}
-                  icon={{
-                    url: '/assets/map-con.jpg',
-                    scaledSize: iconScale
-                  }}
+                  onClick={() => markerClickHandler(loc)}
                   position={{ ...loc }}
                 />
               ))}

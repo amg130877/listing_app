@@ -11,19 +11,23 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import Reports from './pages/Reports';
 import Listings from './pages/MapListing/Listings';
+import Metchants from './pages/Merchants';
+import Agents from './pages/Agents';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   const routes = useRoutes([
     {
-      path: '/dashboard',
+      path: '/app',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
+        { element: <Navigate to="/app/dashboard" />, index: true },
         /* { path: 'app', element: <DashboardAppPage /> }, */
-        { path: 'app', element: <Listings /> },
+        { path: 'dashboard', element: <Listings /> },
         { path: 'user', element: <UserPage /> },
+        { path: 'merchants', element: <Metchants /> },
+        { path: 'agents', element: <Agents /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'reports/:month/:year', element: <Reports /> }
