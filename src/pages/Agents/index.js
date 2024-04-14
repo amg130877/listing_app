@@ -8,7 +8,6 @@ import {
     Table,
     Stack,
     Paper,
-    Avatar,
     Button,
     Popover,
     Checkbox,
@@ -22,11 +21,13 @@ import {
     TableContainer,
     TablePagination
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+
 // components
 import Iconify from '../../components/iconify';
 import Scrollbar from '../../components/scrollbar';
 // sections
-import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
+import { UserListHead } from '../../sections/@dashboard/user';
 
 import USERLIST from "../../_mock/user"
 import Label from "../../components/label"
@@ -272,7 +273,7 @@ export default function Agents() {
                     },
                 }}
             >
-                <MenuItem>
+                <MenuItem component={Link} to='/app/agents/view'>
                     <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
                     Edit
                 </MenuItem>

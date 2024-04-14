@@ -8,11 +8,11 @@ import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
-import DashboardAppPage from './pages/DashboardAppPage';
 import Reports from './pages/Reports';
 import Listings from './pages/MapListing/Listings';
 import Metchants from './pages/Merchants';
 import Agents from './pages/Agents';
+import AgentDetails from './pages/Agents/Details';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +28,7 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'merchants', element: <Metchants /> },
         { path: 'agents', element: <Agents /> },
+        { path: 'agents/view', element: <AgentDetails /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'reports/:month/:year', element: <Reports /> }
