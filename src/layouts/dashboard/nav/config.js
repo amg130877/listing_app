@@ -17,70 +17,78 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'Merchant App',
-    path: '/comingsoon',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'Marketing',
-    path: '/comingsoon',
-    icon: icon('ic_notification_mail'),
-  },
-  {
-    title: 'Training',
-    path: '/comingsoon',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'Underwriting',
-    path: '/comingsoon',
-    icon: icon('ic_notification_mail'),
-  },
-  {
-    title: 'Merchant Onboarding',
-    path: '/comingsoon',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'Merchants',
-    path: '/app/merchants',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'Support Tickets',
-    path: '/comingsoon',
-    icon: icon('ic_notification_mail'),
-  },
-  {
-    title: 'Retention Queue',
-    path: '/comingsoon',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'Pre-Check Queue',
-    path: '/comingsoon',
-    icon: icon('ic_notification_mail'),
-  },
-  {
-    title: 'Administration',
-    path: '/comingsoon',
-    icon: icon('ic_user'),
-  },
-  {
     title: 'Agents',
     path: '/app/agents',
     icon: icon('ic_notification_mail'),
   },
+  // {
+  //   title: 'Merchant App',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_user'),
+  // },
+  // {
+  //   title: 'Marketing',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_notification_mail'),
+  // },
+  // {
+  //   title: 'Training',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_user'),
+  // },
+  // {
+  //   title: 'Underwriting',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_notification_mail'),
+  // },
+  // {
+  //   title: 'Merchant Onboarding',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_user'),
+  // },
   {
-    title: 'Utilities',
-    path: '/comingsoon',
+    title: 'Merchants',
+    path: '/app/merchants',
     icon: icon('ic_user'),
+    subLink : [
+      {
+        title: 'Merchant Onboarding',
+        path: '/app/merchants',
+        icon: icon('ic_user'),
+      },
+    ]
   },
-  {
-    title: 'user',
-    path: '/app/user',
-    icon: icon('ic_user'),
-  },
+  // {
+  //   title: 'Support Tickets',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_notification_mail'),
+  // },
+  // {
+  //   title: 'Retention Queue',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_user'),
+  // },
+  // {
+  //   title: 'Pre-Check Queue',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_notification_mail'),
+  // },
+  // {
+  //   title: 'Administration',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_user'),
+  // },
+
+  // {
+  //   title: 'Utilities',
+  //   path: '/comingsoon',
+  //   icon: icon('ic_user'),
+  // },
+  // {
+  //   title: 'user',
+  //   path: '/app/user',
+  //   icon: icon('ic_user'),
+  // },
   /* {
     title: 'product',
     path: '/dashboard/products',
