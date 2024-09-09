@@ -41,21 +41,22 @@ export default function CardComponent({ id, data, fulldata }) {
         borderRadius: 2,
         boxShadow: 3,
         backgroundColor: 'white',
-        minWidth: '380px'
+        maxWidth: '380px',
+        width: '100%'
       }}
     >
       <Stack direction="column" spacing={1} sx={{ mb: 1, mt: 2, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-        <Stack direction='row' spacing={3} sx={{ justifyContent: 'space-between' }}>
+        <Stack direction='row' spacing={3} sx={{ justifyContent: 'space-between', width: '100%' }}>
           <Stack direction='column' sx={{ justifyContent: 'space-between' }}>
             <Typography variant="h6">{fulldata.volumeByduration[id].head}</Typography>
             <Typography sx={{ fontSize: '12px' }}>{fulldata.volumeByduration[id].duration}</Typography>
           </Stack>
           <Stack direction='column' sx={{ justifyContent: 'space-between' }}>
             <Typography variant="h4">{fulldata.volumeByduration[id].total}</Typography>
-            <Chip label={`Net: ${fulldata.volumeByduration[id].net}`} sx={{ fontSize: '10px', width: 'fit-content', bgcolor: "#8D77FF", color: 'white', boxShadow: 5, }} />
+            <Chip label={`Net: ${fulldata.volumeByduration[id].net}`} sx={{ fontSize: '12px', width: 'fit-content', bgcolor: "#8D77FF", color: 'white', boxShadow: 5, p: 0 }} />
           </Stack>
         </Stack>
-
+        <Divider orientation="horizontal" flexItem />
         <PieChart
           sx={{
             padding: 2,
@@ -65,7 +66,12 @@ export default function CardComponent({ id, data, fulldata }) {
           }}
           series={[
             {
-              data: data.company.map((item) => ({ label: item.label, value: item.value })),
+              data: data.company.map((item) => ({
+                id: item.label,
+                value: item.value,
+                label: item.label,
+                color: item.color // Use the color from the data
+              })),
               innerRadius: 80,
               outerRadius: 50,
               cornerRadius: 0,
@@ -75,7 +81,7 @@ export default function CardComponent({ id, data, fulldata }) {
           width={340}
           height={160}
           slotProps={{
-            legend: { hidden: false },
+            legend: { hidden: true },
           }}
           tooltip={{
             trigger: 'item',
@@ -83,10 +89,11 @@ export default function CardComponent({ id, data, fulldata }) {
           }}
 
         />
+        <Divider orientation="horizontal" flexItem />
         <Stack spacing={1} direction='row' sx={{ mt: 2, width: '100%', justifyContent: 'space-around' }}>
           {data.company.map((item) => (
-            <Box key={item.label} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 1 }}>
-              <Typography sx={{ color: item.color }}>{item.value}</Typography>
+            <Box key={item.label} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 1, textShadow: `0px 0px 20px ${item.color}` }}>
+              <Typography sx={{ color: item.color }}>{`$${item.value}M`}</Typography>
               <Typography sx={{ color: item.color }}>{item.label}</Typography>
             </Box>
           ))}

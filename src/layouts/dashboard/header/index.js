@@ -28,6 +28,9 @@ const StyledRoot = styled(AppBar)(({ theme }) => ({
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   minHeight: HEADER_MOBILE,
+  [theme.breakpoints.down('sm')]: {
+    padding: 0,
+  },
   [theme.breakpoints.up('lg')]: {
     minHeight: HEADER_DESKTOP,
     padding: theme.spacing(0, 2),
@@ -90,6 +93,9 @@ const CustomAppBar = styled(AppBar)(({ theme }) => ({
 
 const CustomToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
+  [theme.breakpoints.down('sm')]: {
+    padding: 0,
+  },
   justifyContent: 'space-between',
   paddingInline: theme.spacing(4),
 }));

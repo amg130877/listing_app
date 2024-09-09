@@ -24,6 +24,10 @@ import { AppWidgetSummary } from '../../sections/@dashboard/app';
 import allAgents from "./locations.json"
 import MapStyles from './MapStyles.json'
 import PieChart from '../../components/pieChart/pie';
+import VolumeCard from '../../components/pieChart/card';
+import TotalRevenuecard from '../../components/pieChart/totalRevenuecard';
+import YearVsYearCard from '../../components/pieChart/yearVsYearCard';
+import MonthVsMonth from '../../components/pieChart/monthVsmonth';
 
 
 
@@ -36,17 +40,17 @@ const revenueAndVolumne = {
       duration: '11-01-2023 - 11-01-2024',
       company: [
         {
-          label: 'Wells',
+          label: 'Wells Fargo',
           value: 678.8,
           color: '#2196f3'
         },
         {
-          label: 'Wab',
+          label: 'West American Bank',
           value: 7855.8,
-          color: '#64b5f6'
+          color: '#07B0B3'
         },
         {
-          label: 'Enspire',
+          label: 'Esquire',
           value: 957.8,
           color: '#9c27b0'
         }
@@ -59,19 +63,19 @@ const revenueAndVolumne = {
       duration: '11-01-2023 - 11-01-2024',
       company: [
         {
-          label: 'Wells',
+          label: 'Wells Fargo',
           value: 908.8,
           color: '#2196f3'
         },
         {
-          label: 'Wab',
+          label: 'West American Bank',
           value: 9078.8,
-          color: '#64b5f6'
+          color: '#07B0B3'
         },
         {
-          label: 'Enspire',
+          label: 'Esquire',
           value: 9078.8,
-          color: '#9c27b0'
+          color: '#9c27b8'
         }
       ]
     },
@@ -82,17 +86,17 @@ const revenueAndVolumne = {
       duration: '11-01-2023 - 11-01-2024',
       company: [
         {
-          label: 'Wells',
+          label: 'Wells Fargo',
           value: 8078.8,
           color: '#2196f3'
         },
         {
-          label: 'Wab',
+          label: 'West American Bank',
           value: 1398.8,
-          color: '#64b5f6'
+          color: '#07B0B3'
         },
         {
-          label: 'Enspire',
+          label: 'Esquire',
           value: 568.8,
           color: '#9c27b0'
         }
@@ -100,9 +104,54 @@ const revenueAndVolumne = {
     }
   ],
   totalMonthVolume: {
-    label: "Total Revenue Sep 2023",
-    value: "$4567.6M"
+    head: "Total Revenue",
+    total: "$4567.6M",
+    value: 4567.6,
+    duration: 'July 2024'
   },
+  newVsClosed: {
+    head: 'Month to Date New/Closed Accounts',
+    duration: "11-01-2023  11-01-2024",
+    total: '7/1',
+    data: [
+      {
+        label: 'Closed',
+        value: 1
+      },
+      {
+        label: 'New',
+        value: 7
+      }
+    ],
+
+  },
+  yearVsYear: {
+    head: 'Last Year/This Year Volume % Change',
+    duration: '2023 / 2024',
+    lastYear: {
+      date: 2022,
+      value: 560
+    },
+    thisYear: {
+      date: 2023,
+      value: 236
+    },
+
+  },
+  monthVsMonth: {
+    head: 'Volume % Change',
+    duration: 'Aug 2024 - Sep 2024',
+    lastMonth: {
+      month: 'Aug',
+      value: 658
+    },
+    thisMonth: {
+      month: "Sep",
+      value: 6000
+    },
+
+  }
+
 }
 
 const HiddenScrollCardContent = styled(CardContent)({
@@ -187,7 +236,7 @@ export default function Listings() {
 
 
           <Stack direction="column" spacing={1} sx={{ mb: 1, mt: 2, width: '100%' }}>
-            <Accordion sx={{ p: 2 , bgcolor:'rgba(145, 158, 171, 0.16)' }} defaultExpanded>
+            <Accordion sx={{ p: 2, bgcolor: 'rgba(145, 158, 171, 0.16)' }} defaultExpanded>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -202,10 +251,22 @@ export default function Listings() {
                   {revenueAndVolumne.volumeByduration.map((item, index) => (
                     <PieChart key={index} id={index} data={item} fulldata={revenueAndVolumne} />
                   ))}
+                  <VolumeCard fulldata={revenueAndVolumne} />
+                  <TotalRevenuecard fulldata={revenueAndVolumne} />
+
                 </Grid>
+                <Typography variant="h6" component="h2" sx={{ textShadow: '0px 0px 7px #969393' }}>
+                  Trends
+                </Typography>
+                <Grid item container spacing={2} xs={12} md={12} sx={{ mb: 2, mt: 2, gap: 2 }}>
+                  <YearVsYearCard fulldata={revenueAndVolumne} />
+                  <MonthVsMonth fulldata={revenueAndVolumne} />
+
+                </Grid>
+
               </AccordionDetails>
             </Accordion>
-            <Accordion sx={{ p: 2 , bgcolor:'rgba(145, 158, 171, 0.16)' }} >
+            <Accordion sx={{ p: 2, bgcolor: 'rgba(145, 158, 171, 0.16)' }} defaultExpanded>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel2-content"
@@ -221,10 +282,21 @@ export default function Listings() {
                   {revenueAndVolumne.volumeByduration.map((item, index) => (
                     <PieChart key={index} id={index} data={item} fulldata={revenueAndVolumne} />
                   ))}
+                  <VolumeCard fulldata={revenueAndVolumne} />
+                  <TotalRevenuecard fulldata={revenueAndVolumne} />
+
+                </Grid>
+                <Typography variant="h6" component="h2" sx={{ textShadow: '0px 0px 7px #969393' }}>
+                  Trends
+                </Typography>
+                <Grid item container spacing={2} xs={12} md={12} sx={{ mb: 2, mt: 2, gap: 2 }}>
+                  <YearVsYearCard fulldata={revenueAndVolumne} />
+                  <MonthVsMonth fulldata={revenueAndVolumne} />
+
                 </Grid>
               </AccordionDetails>
             </Accordion>
-            <Accordion sx={{ p: 2 , bgcolor:'rgba(145, 158, 171, 0.16)' }} >
+            <Accordion sx={{ p: 2, bgcolor: 'rgba(145, 158, 171, 0.16)' }} defaultExpanded>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel3-content"
@@ -239,6 +311,17 @@ export default function Listings() {
                   {revenueAndVolumne.volumeByduration.map((item, index) => (
                     <PieChart key={index} id={index} data={item} fulldata={revenueAndVolumne} />
                   ))}
+                  <VolumeCard fulldata={revenueAndVolumne} />
+                  <TotalRevenuecard fulldata={revenueAndVolumne} />
+
+                </Grid>
+                <Typography variant="h6" component="h2" sx={{ textShadow: '0px 0px 7px #969393' }}>
+                  Trends
+                </Typography>
+                <Grid item container spacing={2} xs={12} md={12} sx={{ mb: 2, mt: 2, gap: 2 }}>
+                  <YearVsYearCard fulldata={revenueAndVolumne} />
+                  <MonthVsMonth fulldata={revenueAndVolumne} />
+
                 </Grid>
               </AccordionDetails>
             </Accordion>
