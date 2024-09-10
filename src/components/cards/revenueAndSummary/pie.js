@@ -30,7 +30,6 @@ function PieCenterLabel({ children }) {
 
 export default function CardComponent({ id, data, fulldata }) {
 
-  console.log(fulldata)
   return (
     <Box
       sx={{
@@ -51,9 +50,10 @@ export default function CardComponent({ id, data, fulldata }) {
             <Typography variant="h6">{fulldata.volumeByduration[id].head}</Typography>
             <Typography sx={{ fontSize: '12px' }}>{fulldata.volumeByduration[id].duration}</Typography>
           </Stack>
-          <Stack direction='column' sx={{ justifyContent: 'space-between' }}>
+          <Stack direction='column' sx={{ justifyContent: 'space-between' , alignItems:'flex-end' }}>
             <Typography variant="h4">{fulldata.volumeByduration[id].total}</Typography>
-            <Chip label={`Net: ${fulldata.volumeByduration[id].net}`} sx={{ fontSize: '12px', width: 'fit-content', bgcolor: "#8D77FF", color: 'white', boxShadow: 5, p: 0 }} />
+            <Typography sx={{ fontSize: '12px', width: 'fit-content', textShadow: 5, p: 0 }}>{`Net: ${fulldata.volumeByduration[id].net}`}</Typography>
+            {/* <Chip label={`Net: ${fulldata.volumeByduration[id].net}`} sx={{ fontSize: '12px', width: 'fit-content', bgcolor: "#8D77FF", color: 'white', boxShadow: 5, p: 0 }} /> */}
           </Stack>
         </Stack>
         <Divider orientation="horizontal" flexItem />

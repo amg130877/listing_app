@@ -23,11 +23,14 @@ import AgentCard from './AgentCard';
 import { AppWidgetSummary } from '../../sections/@dashboard/app';
 import allAgents from "./locations.json"
 import MapStyles from './MapStyles.json'
-import PieChart from '../../components/pieChart/pie';
-import VolumeCard from '../../components/pieChart/card';
-import TotalRevenuecard from '../../components/pieChart/totalRevenuecard';
-import YearVsYearCard from '../../components/pieChart/yearVsYearCard';
-import MonthVsMonth from '../../components/pieChart/monthVsmonth';
+import PieChart from '../../components/cards/revenueAndSummary/pie';
+import VolumeCard from '../../components/cards/revenueAndSummary/newVsclosed';
+import TotalRevenuecard from '../../components/cards/revenueAndSummary/totalRevenuecard';
+import YearVsYearCard from '../../components/cards/revenueAndSummary/yearVsYearCard';
+import MonthVsMonth from '../../components/cards/revenueAndSummary/monthVsmonth';
+import ApprovedVsOpenAccounts from '../../components/cards/agentsAndMerchants/approvedVsOpenAccounts';
+import YearVsMonthNewAgents from '../../components/cards/agentsAndMerchants/yearVsMonthNewAgents';
+import OpenVsActiveVsInActive from '../../components/cards/agentsAndMerchants/openVsActiveVsInActive';
 
 
 
@@ -116,7 +119,7 @@ const revenueAndVolumne = {
     data: [
       {
         label: 'Closed',
-        value: 1
+        value: 1,
       },
       {
         label: 'New',
@@ -150,7 +153,66 @@ const revenueAndVolumne = {
       value: 6000
     },
 
-  }
+  },
+  approvedVsOpened: {
+    head: 'Year to Date Total Approved/Open Accounts',
+    duration: "11-01-2023  11-01-2024",
+    total: '899/935',
+    data: [
+      {
+        label: 'Open Accounts',
+        value: 788,
+         color: '#2196f3'
+      },
+      {
+        label: 'Total Accounts',
+        value: 900,
+         color: '#07B0B3'
+      }
+    ],
+
+  },
+
+  yearVsmonthNewAgents: {
+    head: 'Year to Date/Month to Date New Agents Signed Up',
+    duration: "11-01-2023  11-01-2024",
+    total: '54/2',
+    data: [
+      {
+        label: 'YTD',
+        value: 54,
+         color: '#2196f3'
+      },
+      {
+        label: 'MTD',
+        value: 2,
+         color: '#07B0B3'
+      }
+    ],
+
+  },
+  openVsActiveVsInActive: {
+    head: 'Open / Active / InActive',
+    duration: "11-01-2023  11-01-2024",
+    data: [
+      {
+        label: 'Open',
+        value: 540,
+         color: '#2196f3'
+      },
+      {
+        label: 'Active',
+        value: 202,
+         color: '#07B0B3'
+      },
+      {
+        label: 'In Active',
+        value: 289,
+         color: '#9c27b0'
+      }
+    ],
+
+  },
 
 }
 
@@ -278,25 +340,26 @@ export default function Listings() {
               </AccordionSummary>
               <AccordionDetails>
 
-                <Grid item container spacing={2} xs={12} md={12} sx={{ mb: 2, mt: 2, gap: 2 }}>
+                {/* <Grid item container spacing={2} xs={12} md={12} sx={{ mb: 2, mt: 2, gap: 2 }}>
                   {revenueAndVolumne.volumeByduration.map((item, index) => (
                     <PieChart key={index} id={index} data={item} fulldata={revenueAndVolumne} />
                   ))}
                   <VolumeCard fulldata={revenueAndVolumne} />
                   <TotalRevenuecard fulldata={revenueAndVolumne} />
 
-                </Grid>
-                <Typography variant="h6" component="h2" sx={{ textShadow: '0px 0px 7px #969393' }}>
-                  Trends
-                </Typography>
-                <Grid item container spacing={2} xs={12} md={12} sx={{ mb: 2, mt: 2, gap: 2 }}>
-                  <YearVsYearCard fulldata={revenueAndVolumne} />
-                  <MonthVsMonth fulldata={revenueAndVolumne} />
+                </Grid> */}
 
+                {/* <Typography variant="h6" component="h2" sx={{ textShadow: '0px 0px 7px #969393' }}>
+                  Trends
+                </Typography> */}
+                <Grid item container spacing={2} xs={12} md={12} sx={{ mb: 2, mt: 2, gap: 2 }}>
+                  <OpenVsActiveVsInActive fulldata={revenueAndVolumne} />
+                  <ApprovedVsOpenAccounts fulldata={revenueAndVolumne} />
+                  <YearVsMonthNewAgents fulldata={revenueAndVolumne} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
-            <Accordion sx={{ p: 2, bgcolor: 'rgba(145, 158, 171, 0.16)' }} defaultExpanded>
+            <Accordion sx={{ p: 2, bgcolor: 'rgba(145, 158, 171, 0.16)' }} defaultExpanded disabled>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel3-content"

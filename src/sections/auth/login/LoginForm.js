@@ -1,24 +1,38 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField, Snackbar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
+import { useLogin } from '../../../services/loginservices';
+// hooks
 
-// ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
+  const { login, isLoading, error } = useLogin();
 
-  const handleClick = () => {
-    navigate('/app/dashboard', { replace: true });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const credentials = {
+      email: data.get('email'),
+      password: data.get('password'),
+    };
+
+    try {
+      await login(credentials);
+      navigate('/app/dashboard', { replace: true });
+    } catch (error) {
+      // Error is handled by the useLogin hook
+      console.error('Login failed', error);
+    }
   };
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <Stack spacing={3}>
         <TextField name="email" label="Email address" />
 
@@ -39,15 +53,23 @@ export default function LoginForm() {
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        {/* <Checkbox name="remember" label="Remember me" /> */}
         <Link variant="subtitle2" underline="hover">
           Forgot password?
         </Link>
       </Stack>
+      {(error && error.message) &&
+        <Snackbar
+          sx={{ backgroundColor: 'red', color: 'white' }}
+          open={error.message !== undefined}
+          autoHideDuration={3000}
+          message={error.message}
+        />
+      }
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
+
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading}>
         Login
       </LoadingButton>
-    </>
+    </form>
   );
 }
