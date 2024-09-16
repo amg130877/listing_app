@@ -1,45 +1,53 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// @mui
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import { Link, Stack, IconButton, InputAdornment, TextField, Snackbar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-// components
+
+import loginSchema from '../../../schemas/loginSchema';
 import Iconify from '../../../components/iconify';
 import { useLogin } from '../../../services/loginservices';
-// hooks
-
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { login, isLoading, error } = useLogin();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const credentials = {
-      email: data.get('email'),
-      password: data.get('password'),
-    };
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
+  const onSubmit = async (data) => {
     try {
-      await login(credentials);
+      await login(data);
       navigate('/app/dashboard', { replace: true });
     } catch (error) {
-      // Error is handled by the useLogin hook
       console.error('Login failed', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField
+          {...register('email')}
+          label="Email address"
+          error={!!errors.email}
+          helperText={errors.email?.message}
+        />
 
         <TextField
-          name="password"
+          {...register('password')}
           label="Password"
           type={showPassword ? 'text' : 'password'}
+          error={!!errors.password}
+          helperText={errors.password?.message}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -57,15 +65,15 @@ export default function LoginForm() {
           Forgot password?
         </Link>
       </Stack>
-      {(error && error.message) &&
+
+      {error && error.message && (
         <Snackbar
           sx={{ backgroundColor: 'red', color: 'white' }}
-          open={error.message !== undefined}
+          open={!!error.message}
           autoHideDuration={3000}
           message={error.message}
         />
-      }
-
+      )}
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading}>
         Login

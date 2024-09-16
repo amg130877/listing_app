@@ -13,6 +13,7 @@ import Listings from './pages/MapListing/Listings';
 import Metchants from './pages/Merchants';
 import Agents from './pages/Agents';
 import AgentDetails from './pages/Agents/Details';
+import CreateAgent from './pages/Agents/createAgent';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +29,7 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'merchants', element: <Metchants /> },
         { path: 'agents', element: <Agents /> },
+        { path: 'agents/createagent', element: <CreateAgent /> },
         { path: 'agents/view', element: <AgentDetails /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },

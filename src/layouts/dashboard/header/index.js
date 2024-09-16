@@ -107,7 +107,7 @@ Header.propTypes = {
 };
 
 export default function Header({ onOpenNav }) {
-  const { activeTab, setActiveTab, openFilter, setOpenFilter } = useRootContext();
+  const { activeTab, setActiveTab, openFilter, setOpenFilter , user , handleLogout} = useRootContext();
 
   const handleChange = (event, nextView) => {
     setActiveTab(nextView);
@@ -154,7 +154,7 @@ export default function Header({ onOpenNav }) {
                   <FilterListIcon />
                   <p>Filter</p>
                 </FilterButton>
-                <AccountPopover />
+                <AccountPopover user={user} handleLogout={handleLogout}/>
                 <NotificationsPopover />
               </Box>
             </CustomToolbar>

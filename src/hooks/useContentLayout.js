@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useLocalStorage from "./useLocalStorage";
 
 export const useContentLayout = () => {
@@ -11,70 +12,77 @@ export const useContentLayout = () => {
     const [userLocal, setUserToLocal] = useLocalStorage('user', '');
     const [activeTab, setActiveTab] = useState('list');
     const [openFilter, setOpenFilter] = useState(false);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
-        setLoading(true)
+        setLoading(true);
         if (user) {
+            // console.log('registering existing')
             registerUser();
         } else {
+            // console.log('registering new from local')
             fetchUser();
         }
     }, [user]);
 
 
-
     const fetchUser = async () => {
-        try {
-            if(roleLocal){
-                const response = await fetch(`/api/${roleLocal}/me`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                });
-                const userData = await response.json();
-                if (!userData.data.user) {
-                    setAuthorized(false);
-                    setLoading(false)
-                    return;
-                }
-                setUser(userData.data);
-                setAuthorized(true);
-                registerUser();
-                setLoading(false)
-            }
-            else {
-                setLoading(false)
-                new Error("No Role in the Local storage")
-            }
-        } catch (error) {
-            console.log("Error fetching user:", error);
-            setLoading(false)
+        setLoading(true);
+        if (userLocal.token) {
+            setUser(userLocal);
+        }
+        else {
+            // console.log('No user in the local storage so setting both to false')
+            setLoading(false);
             setAuthorized(false);
         }
-        // finally{
-        //     setLoading(false)
-        // }
+
     }
 
-    const registerUser = () => {
-        if (user?.user) {
-            const role = user.user.favshops ? "buyer" : "seller";
-            setAuthorized(true)
-            setRoles(role);
-            setRoleToLocal(role);
-            setUserToLocal(JSON.stringify(user));
-            setLoading(false)
+    const setTokenToCookie = (user) => {
+        if (user && user.token) {
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 1);
+            document.cookie = `_token=${user.token}; expires=${expirationDate.toUTCString()}; path=/app; Secure; SameSite=Strict`;
         }
     };
 
-    const handleLogout = async() =>{
+    const registerUser = () => {
+        setLoading(true);
+        try {
+            if (user) {
+                // console.log('inside the register functin', loading, authorized, user.roleNames)
+                setAuthorized(true)
+                setTokenToCookie(user);
+                setRoles(user.roleNames);
+                setUserToLocal(JSON.stringify(user));
+                setLoading(false)
+                // console.log('inside the register functin', loading, authorized, user.roleNames)
+            }
+            else {
+                setLoading(false);
+                setAuthorized(false);
+                alert('No User')
+            }
+        }
+        catch (e) {
+            setLoading(false);
+            setAuthorized(false);
+            throw new Error(e)
+        }
+
+    };
+    // console.log(user)
+    // console.log('outside', loading, authorized, user)
+    const handleLogout = async () => {
         localStorage.removeItem('user');
-        localStorage.removeItem('role');
+        setUser(null)
         setRoles(null)
-        setTimeout(()=> setAuthorized(false), 1000)
+        setTimeout(() => setAuthorized(false), 1000);
+        document.cookie = "_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        navigate('/login');
     }
 
-    return { loading, setLoading, collapsed, setCollapsed, user, setUser, roles, setRoles, authorized , handleLogout , fetchUser , activeTab , setActiveTab , openFilter , setOpenFilter }
+    return { loading, setLoading, collapsed, setCollapsed, user, setUser, roles, setRoles, authorized, handleLogout, fetchUser, activeTab, setActiveTab, openFilter, setOpenFilter }
 }

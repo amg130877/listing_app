@@ -19,7 +19,10 @@ import {
     Typography,
     IconButton,
     TableContainer,
-    TablePagination
+    TablePagination,
+    FormControl,
+    InputLabel,
+    Select
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -31,6 +34,7 @@ import { UserListHead } from '../../sections/@dashboard/user';
 
 import USERLIST from "../../_mock/user"
 import Label from "../../components/label"
+import AgentHeader from '../../components/agents/header';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -40,7 +44,7 @@ const TABLE_HEAD = [
     { id: 'subAgentCode', label: 'Sub Agent Code', alignRight: false },
     { id: 'agentEmail', label: 'Email', alignRight: false },
     { id: 'agentMobileNumber', label: 'Phone', alignRight: false },
-    { id: '', label: 'Action', alignRight: false },
+    { id: 'status', label: 'Status', alignRight: false },
 ];
 
 
@@ -87,7 +91,7 @@ export default function Agents() {
 
     const [filterName, setFilterName] = useState('');
 
-    const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleOpenMenu = (event) => {
         setOpen(event.currentTarget);
@@ -153,17 +157,22 @@ export default function Agents() {
                 <title> Agents </title>
             </Helmet>
 
-            <Container>
-                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-                    <Typography variant="h4" gutterBottom>
-                        Agents
-                    </Typography>
-                    <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                        New Agent
-                    </Button>
-                </Stack>
+            <Container sx={{ width: '100%', maxWidth: '100% !important', margin: 0 , position:'relative'}}>
+                <AgentHeader />
+                <FormControl sx={{ float:'right', marginBlock: 2, width: '200px' }} >
+                    <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                    <Select
 
-                <Card>
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Age"
+                        placeholder='Select status'
+                    >
+                        <MenuItem value='approved'>Approved</MenuItem>
+                        <MenuItem value='unapproved'>Un Approved</MenuItem>
+                    </Select>
+                </FormControl>
+                <Card sx={{  width:"100%"}}>
                     {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
 
                     <Scrollbar>
@@ -191,9 +200,9 @@ export default function Agents() {
 
                                                 {TABLE_HEAD.filter(col => col.id).map((col) => (
                                                     <React.Fragment key={col.id}>
-                                                        {col.id === "accountStatus" ? (
+                                                        {col.id === "status" ? (
                                                             <TableCell align="left">
-                                                                <Label color={(row[col.id] === 'Closed' && 'error') || 'success'}>{sentenceCase(row[col.id])}</Label>
+                                                                <Label color={(row[col.id] === 'Un Approved' && 'error') || 'success'}>{sentenceCase(row[col.id])}</Label>
                                                             </TableCell>
                                                         ) : (
                                                             <TableCell align="left">{row[col.id]}</TableCell>
@@ -201,11 +210,11 @@ export default function Agents() {
                                                     </React.Fragment>
                                                 ))}
 
-                                                <TableCell align="right">
+                                                {/* <TableCell align="right">
                                                     <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
                                                         <Iconify icon={'eva:more-vertical-fill'} />
                                                     </IconButton>
-                                                </TableCell>
+                                                </TableCell> */}
                                             </TableRow>
                                         );
                                     })}

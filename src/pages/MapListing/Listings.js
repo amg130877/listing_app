@@ -31,6 +31,7 @@ import MonthVsMonth from '../../components/cards/revenueAndSummary/monthVsmonth'
 import ApprovedVsOpenAccounts from '../../components/cards/agentsAndMerchants/approvedVsOpenAccounts';
 import YearVsMonthNewAgents from '../../components/cards/agentsAndMerchants/yearVsMonthNewAgents';
 import OpenVsActiveVsInActive from '../../components/cards/agentsAndMerchants/openVsActiveVsInActive';
+import withAuth from '../../services/auth';
 
 
 
@@ -179,12 +180,12 @@ const revenueAndVolumne = {
     total: '54/2',
     data: [
       {
-        label: 'YTD',
+        label: 'Year To Date',
         value: 54,
          color: '#2196f3'
       },
       {
-        label: 'MTD',
+        label: 'Month To Date',
         value: 2,
          color: '#07B0B3'
       }
@@ -227,7 +228,7 @@ const HiddenScrollCardContent = styled(CardContent)({
   }
 })
 
-export default function Listings() {
+ function Listings() {
   const [agent, setAgent] = React.useState(null)
   const [iconScale, seticonScale] = React.useState();
   const { activeTab, setActiveTab, openFilter, setOpenFilter } = useRootContext(); // Use context
@@ -235,6 +236,8 @@ export default function Listings() {
   let locations = [...allAgents]
 
   React.useEffect(() => {
+
+
     const width = agent ? 50 : 30;
     const height = agent ? 50 : 30;
     seticonScale({ width, height })
@@ -359,7 +362,7 @@ export default function Listings() {
                 </Grid>
               </AccordionDetails>
             </Accordion>
-            <Accordion sx={{ p: 2, bgcolor: 'rgba(145, 158, 171, 0.16)' }} defaultExpanded disabled>
+            <Accordion sx={{ p: 2, bgcolor: 'rgba(145, 158, 171, 0.16)' }}  disabled>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel3-content"
@@ -388,19 +391,6 @@ export default function Listings() {
                 </Grid>
               </AccordionDetails>
             </Accordion>
-
-
-
-
-
-
-
-
-
-
-
-
-
           </Stack>
         </>
 
@@ -411,7 +401,7 @@ export default function Listings() {
           <Box sx={{ boxShadow: 2 }}>
             <APIProvider apiKey={API_KEY}>
               <Map
-                style={{ height: 500 }}
+                style={{ height: window.innerHeight * 0.75 }}
                 defaultZoom={4}
                 restriction={{
                   latLngBounds: usaBounds,
@@ -438,3 +428,6 @@ export default function Listings() {
     </Grid>
   );
 }
+
+
+export default withAuth(Listings)
